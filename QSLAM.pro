@@ -17,17 +17,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 INCLUDEPATH += /usr/include/opencv2
 INCLUDEPATH += /usr/include/eigen3
+INCLUDEPATH += /opt/ros/melodic/include
 
-LIBS += /usr/lib/x86_64-linux-gnu/libopencv*.so.3.2
+LIBS += /usr/lib/x86_64-linux-gnu/libopencv*.so.3.2 \
+        /opt/ros/melodic/lib/x86_64-linux-gnu/libuvc.so
 
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-    opencvthread.cpp
+    opencvthread.cpp \
+    uvc_driver.cpp
 
 HEADERS += \
     mainwindow.h \
-    opencvthread.h
+    opencvthread.h \
+    uvc_driver.h
 
 FORMS += \
     mainwindow.ui
