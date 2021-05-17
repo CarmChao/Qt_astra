@@ -15,22 +15,24 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-INCLUDEPATH += /usr/include/opencv2
+INCLUDEPATH += /usr/local/include/opencv2
 INCLUDEPATH += /usr/include/eigen3
-INCLUDEPATH += /opt/ros/melodic/include
+INCLUDEPATH += /usr/include/boost
 
-LIBS += /usr/lib/x86_64-linux-gnu/libopencv*.so.3.2 \
-        /opt/ros/melodic/lib/x86_64-linux-gnu/libuvc.so
+LIBS += /usr/local/lib/libopencv*.so.3.4 \
+        -lboost_system
 
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
     opencvthread.cpp \
+    openni_driver.cpp \
     uvc_driver.cpp
 
 HEADERS += \
     mainwindow.h \
     opencvthread.h \
+    openni_driver.h \
     uvc_driver.h
 
 FORMS += \
@@ -40,3 +42,14 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+
+unix:!macx: LIBS += -L$$PWD/../../../../../opt/ros/melodic/lib/x86_64-linux-gnu/ -luvc
+
+INCLUDEPATH += $$PWD/../../../../../opt/ros/melodic/include
+DEPENDPATH += $$PWD/../../../../../opt/ros/melodic/include
+
+unix:!macx: LIBS += -L$$PWD/Redist/ -lOpenNI2
+
+INCLUDEPATH += $$PWD/Include
+DEPENDPATH += $$PWD/Include

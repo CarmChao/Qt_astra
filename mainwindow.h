@@ -4,6 +4,8 @@
 #include <QMainWindow>
 
 #include "opencvthread.h"
+#include "uvc_driver.h"
+#include "openni_driver.h"
 using namespace cv;
 
 QT_BEGIN_NAMESPACE
@@ -25,11 +27,13 @@ signals:
 
 private slots:
     void on_pushButton_enter_clicked();
-    void setImage(QImage imgSrc, QImage imgChanged, float fps);
+    void setImage(QImage imgSrc, float fps);
 
 private:
     Ui::MainWindow *ui;
-    OpenCVThread *thred_showImg;
+//    OpenCVThread *thred_showImg;
+    CameraDriver *uvc_driver;
+    OpenNIDriver *openni_driver;
     int dev;
     QImage img;
     bool opened;

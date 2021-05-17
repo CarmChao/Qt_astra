@@ -1,22 +1,47 @@
 #ifndef UVC_DRIVER_H
 #define UVC_DRIVER_H
 
+#include "opencv2/core.hpp"
 #include "libuvc/libuvc.h"
-
+#include <boost/thread/recursive_mutex.hpp>
+//#include <mutex>
 #include <string>
+#include <QMainWindow>
+#include <QObject>
 
-class CameraDriver
+class CameraConfig
 {
 public:
-    CameraDriver();
+    CameraConfig()
+    {
+        video_mode = "yuyv";
+        frame_rate = 30;
+        width = 640;
+        height = 480;
+    };
+    ~CameraConfig(){};
+
+    std::string video_mode;
+    int width;
+    int height;
+    int frame_rate;
+};
+
+class CameraDriver : public QObject
+{
+        Q_OBJECT
+public:
+    CameraDriver(QMainWindow *ptr);
     ~CameraDriver();
 
     bool Start();
     void Stop();
-    void Reconfig();
+    void Reconfig(CameraConfig &config);
     void CloseCamera();
-    void OpenCamera();
-
+    void OpenCamera(CameraConfig &new_config);
+//    void
+signals:
+    void sendFrames(QImage imgSrc,  float fps);
 private:
     enum State{
         k_initial = 0,
@@ -39,12 +64,17 @@ private:
     void ImageCallback(uvc_frame_t *frame);
     static void ImageCallbackAdapter(uvc_frame_t *frame, void *ptr);
 
+    uvc_frame_format GetVideoMode(std::string mode);
     State mstate;
 
     uvc_context_t *mpctx;
     uvc_device_t *mpdev;
     uvc_device_handle_t *mpdevh;
     uvc_frame_t *mprgb_frame;
+
+    boost::recursive_mutex mmutex;
+
+    CameraConfig mconfig;
 };
 
 
