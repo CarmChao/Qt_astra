@@ -24,6 +24,21 @@ private:
         k_running = 2,
     };
 
+    void AutoControlsCallback(enum uvc_status_class status_class,
+                              int event,
+                              int selector,
+                              enum uvc_status_attribute status_attribute,
+                              void *data, size_t data_len);
+    static void AutoControlsCallbackAdapter(enum uvc_status_class status_class,
+                                            int event,
+                                            int selector,
+                                            enum uvc_status_attribute status_attribute,
+                                            void *data, size_t data_len,
+                                            void *ptr);
+    // Accept a new image frame from the camera
+    void ImageCallback(uvc_frame_t *frame);
+    static void ImageCallbackAdapter(uvc_frame_t *frame, void *ptr);
+
     State mstate;
 
     uvc_context_t *mpctx;

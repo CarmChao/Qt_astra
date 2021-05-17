@@ -77,3 +77,16 @@ void CameraDriver::CloseCamera()
         mstate = k_stopped;
     }
 }
+
+void CameraDriver::AutoControlsCallbackAdapter(enum uvc_status_class status_class, int event, int selector, enum uvc_status_attribute status_attribute, void *data, size_t data_len, void *ptr)
+{
+    CameraDriver *driver = static_cast<CameraDriver*>(ptr);
+
+    driver->AutoControlsCallback(status_class, event, selector,
+                                 status_attribute, data, data_len);
+}
+
+void CameraDriver::AutoControlsCallback(enum uvc_status_class status_class, int event, int selector, enum uvc_status_attribute status_attribute, void *data, size_t data_len)
+{
+
+}
