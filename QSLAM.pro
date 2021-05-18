@@ -15,11 +15,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-INCLUDEPATH += /usr/local/include/opencv2
+#INCLUDEPATH += /usr/local/include/opencv2
+INCLUDEPATH += /usr/local/opencv3-4/include
 INCLUDEPATH += /usr/include/eigen3
 INCLUDEPATH += /usr/include/boost
 
-LIBS += /usr/local/lib/libopencv*.so.3.4 \
+LIBS += /usr/local/opencv3-4/lib/libopencv*.so* \
         -lboost_system
 
 SOURCES += \
@@ -53,3 +54,9 @@ unix:!macx: LIBS += -L$$PWD/Redist/ -lOpenNI2
 
 INCLUDEPATH += $$PWD/Include
 DEPENDPATH += $$PWD/Include
+
+unix:!macx: LIBS += -L$$PWD/../../../../usr/local/opencv3-4/lib/ -lopencv_core
+unix:!macx: LIBS += -L$$PWD/../../../../usr/local/opencv3-4/lib/ -lopencv_imgproc
+
+INCLUDEPATH += $$PWD/../../../../usr/local/opencv3-4/include
+DEPENDPATH += $$PWD/../../../../usr/local/opencv3-4/include

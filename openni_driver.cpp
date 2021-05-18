@@ -8,12 +8,11 @@ void FrameProcess::onNewFrame(openni::VideoStream &stream)
     stream.readFrame(&m_frame);
     if(mstream == 1)
     {
-        qDebug("get frame");
         p_ptr->ProcessDepth(m_frame);
     }
     else
     {
-        p_ptr->ProcessIR();
+        p_ptr->ProcessIR(m_frame);
     }
 }
 
@@ -74,21 +73,82 @@ void OpenNIDriver::ProcessDepth(VideoFrameRef &m_frame)
         for (int col = 0; col < width; col++)
         {
             char depthValue = pDepthHist[*depthCell] * 255;
+            *showcell++ = depthValue;
+            *showcell++ = depthValue;
             *showcell++ = 0;
-            *showcell++ = depthValue;
-            *showcell++ = depthValue;
             depthCell++;
         }
     }
 
-    qDebug("get img");
-    QImage imgSrc = QImage((const uchar*)(depthImg.data), depthImg.cols, depthImg.rows, depthImg.step, QImage::Format_RGB888);
-    emit sendFrames(imgSrc, 10);
+    depth_img = QImage((const uchar*)(depthImg.data), depthImg.cols, depthImg.rows, depthImg.step, QImage::Format_RGB888);
+    emit sendFrames(10);
 }
 
-void OpenNIDriver::ProcessIR()
+void OpenNIDriver::ProcessIR(VideoFrameRef &m_frame)
 {
-    ;
+    if(!m_frame.isValid())
+    {
+        qDebug("this frame is invalid, skip it");
+        return;
+    }
+
+//    if (m_frame.getVideoMode().getPixelFormat() != PIXEL_FORMAT_DEPTH_1_MM && m_frame.getVideoMode().getPixelFormat() != PIXEL_FORMAT_DEPTH_100_UM)
+//            {
+//                printf("Unexpected frame format\n");
+//                return;
+//            }
+
+    DepthPixel* pDepth = (DepthPixel*)m_frame.getData();
+    cv::Mat depthRaw = cv::Mat(m_frame.getVideoMode().getResolutionY(), m_frame.getVideoMode().getResolutionX(), CV_16UC1, (unsigned char*)pDepth);
+
+    float* pDepthHist = NULL;
+    if (pDepthHist == NULL) {
+        pDepthHist = new float[MAX_DEPTH_VALUE];
+    }
+    memset(pDepthHist, 0, MAX_DEPTH_VALUE * sizeof(float));
+
+
+    int numberOfPoints = 0;
+    openni::DepthPixel nValue;
+
+    int totalPixels = m_frame.getVideoMode().getResolutionY() * m_frame.getVideoMode().getResolutionX();
+
+    for (int i = 0; i < totalPixels; i ++) {
+        nValue = pDepth[i];
+        if (nValue != 0) {
+            pDepthHist[nValue] ++;
+            numberOfPoints ++;
+        }
+    }
+
+    for (int i = 1; i < MAX_DEPTH_VALUE; i ++) {
+        pDepthHist[i] += pDepthHist[i - 1];
+    }
+
+    for (int i = 1; i < MAX_DEPTH_VALUE; i ++) {
+        if (pDepthHist[i] != 0) {
+            pDepthHist[i] = (numberOfPoints - pDepthHist[i]) / (float)numberOfPoints;
+        }
+    }
+
+    int height = m_frame.getVideoMode().getResolutionY();
+    int width = m_frame.getVideoMode().getResolutionX();
+    cv::Mat depthImg(height, width, CV_8UC3);
+    for (int row = 0; row < height; row++) {
+        DepthPixel* depthCell = pDepth + row * width;
+        uchar * showcell = (uchar *)depthImg.ptr<uchar>(row);
+        for (int col = 0; col < width; col++)
+        {
+            char depthValue = pDepthHist[*depthCell] * 255;
+            *showcell++ = depthValue;
+            *showcell++ = depthValue;
+            *showcell++ = 0;
+            depthCell++;
+        }
+    }
+
+    ir_img = QImage((const uchar*)(depthImg.data), depthImg.cols, depthImg.rows, depthImg.step, QImage::Format_RGB888);
+    emit sendirFrames(10);
 }
 
 OpenNIDriver::OpenNIDriver()
@@ -125,8 +185,8 @@ bool OpenNIDriver::openniInit()
         qDebug("Couldn't open device\n%s\n", OpenNI::getExtendedError());
         return false;
     }
-    mdepth_stream.addNewFrameListener(mdepth_processor);
-    mir_stream.addNewFrameListener(mir_processor);
+//    mdepth_stream.addNewFrameListener(mdepth_processor);
+//    mir_stream.addNewFrameListener(mir_processor);
     return true;
 }
 
@@ -166,6 +226,17 @@ void OpenNIDriver::StartOpenNI(int i)
             qDebug("Couldn't start the ir stream\n%s\n", OpenNI::getExtendedError());
             return;
         }
-
+        mir_stream.addNewFrameListener(mir_processor);
     }
+}
+
+void OpenNIDriver::Stop()
+{
+    mdepth_stream.removeNewFrameListener(mdepth_processor);
+    mir_stream.removeNewFrameListener(mir_processor);
+    mdepth_stream.stop();
+    mir_stream.destroy();
+    mir_stream.destroy();
+    device.close();
+    OpenNI::shutdown();
 }

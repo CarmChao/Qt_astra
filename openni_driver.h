@@ -64,15 +64,22 @@ public:
 
     void StartOpenNI(int i);
 
+    void Stop();
+
     void ProcessDepth(openni::VideoFrameRef &m_frame);
 
-    void ProcessIR();
+    void ProcessIR(openni::VideoFrameRef &m_frame);
+
+
 
     FrameProcess *mdepth_processor;
     FrameProcess *mir_processor;
+    QImage depth_img;
+    QImage ir_img;
 
 signals:
-    void sendFrames(QImage imgSrc,  float fps);
+    void sendFrames(float fps);
+    void sendirFrames(float fps);
 
 private:
 

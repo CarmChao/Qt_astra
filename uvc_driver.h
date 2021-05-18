@@ -39,9 +39,10 @@ public:
     void Reconfig(CameraConfig &config);
     void CloseCamera();
     void OpenCamera(CameraConfig &new_config);
-//    void
+
+    QImage rgb_img;
 signals:
-    void sendFrames(QImage imgSrc,  float fps);
+    void sendFrames(float fps);
 private:
     enum State{
         k_initial = 0,

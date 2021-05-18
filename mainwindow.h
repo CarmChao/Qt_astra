@@ -27,7 +27,8 @@ signals:
 
 private slots:
     void on_pushButton_enter_clicked();
-    void setImage(QImage imgSrc, float fps);
+    void setImage(float fps);
+    void setImage1(float fps);
 
 private:
     Ui::MainWindow *ui;

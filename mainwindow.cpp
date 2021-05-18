@@ -28,30 +28,43 @@ void MainWindow::on_pushButton_enter_clicked()
         ui->pushButton_enter->setText("关闭");
 //        thred_showImg = new OpenCVThread(dev);
 //        connect(thred_showImg, &OpenCVThread::sendFrames, this, &MainWindow::setImage);
-//        connect(uvc_driver, &CameraDriver::sendFrames, this, &MainWindow::setImage);
-        connect(openni_driver, &OpenNIDriver::sendFrames, this, &MainWindow::setImage);
-//        connect(this, SIGNAL(over()), thred_showImg, SLOT(closeCamera()));
-//        connect(thred_showImg, &OpenCVThread::finished, thred_showImg, &OpenCVThread::deleteLater);
+        connect(uvc_driver, &CameraDriver::sendFrames, this, &MainWindow::setImage);
+//        connect(openni_driver, &OpenNIDriver::sendFrames, this, &MainWindow::setImage);
+//        connect(openni_driver, &OpenNIDriver::sendirFrames, this, &MainWindow::setImage1);
+//
+        connect(this, &MainWindow::over, uvc_driver, &CameraDriver::Stop);
+//        connect(, &OpenCVThread::finished, thred_showImg, &OpenCVThread::deleteLater);
 //        thred_showImg->start();
-        openni_driver->StartOpenNI(1);
+//        openni_driver->StartOpenNI(1);
+//        openni_driver->StartOpenNI(0);
+        uvc_driver->Start();
     }
     else
     {
         opened = false;
         ui->pushButton_enter->setText("打开");
 //        disconnect(thred_showImg, &OpenCVThread::sendFrames, this, &MainWindow::setImage);
-        uvc_driver->Stop();
-        ui->label_show->clear();
-        ui->label_showChanged->clear();
-        ui->label_show->setText("请打开摄像头");
-        ui->label_showChanged->setText("请打开摄像头");
+//        uvc_driver->Stop();
+//        ui->
+//        ui->label_showChanged->clear();
+//        ui->label_show->setText("请打开摄像头");
+//        ui->label_showChanged->setText("请打开摄像头");
         emit over();
     }
 }
 
-void MainWindow::setImage(QImage imgSrc, float fps)
+void MainWindow::setImage(float fps)
 {
-    ui->label_show->setPixmap(QPixmap::fromImage(imgSrc.mirrored(true, false)));
+    QImage tmp_img = openni_driver->depth_img.copy();
+    ui->label_rgb_show->setPixmap(QPixmap::fromImage(tmp_img));
 //    ui->label_showChanged->setPixmap(QPixmap::fromImage(imgChanged.mirrored(true, false)));
-    ui->label_title->setText(QString("fps: %1").arg(fps));
+//    ui->label_title->setText(QString("fps: %1").arg(fps));
+}
+
+void MainWindow::setImage1(float fps)
+{
+    QImage tmp_img = openni_driver->ir_img.copy();
+    ui->label_ir_show->setPixmap(QPixmap::fromImage(tmp_img));
+//    ui->label_showChanged->setPixmap(QPixmap::fromImage(tmp_img.mirrored(true, false)));
+//    ui->label_title->setText(QString("fps: %1").arg(fps));
 }

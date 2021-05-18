@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1344</width>
-    <height>839</height>
+    <width>1994</width>
+    <height>942</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,128 +15,345 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QWidget" name="widget_show" native="true">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_2">
-         <item row="0" column="0">
-          <layout class="QVBoxLayout" name="verticalLayout">
-           <item>
-            <widget class="QWidget" name="widget_title" native="true">
-             <widget class="QLabel" name="label_title">
-              <property name="geometry">
-               <rect>
-                <x>160</x>
-                <y>40</y>
-                <width>181</width>
-                <height>51</height>
-               </rect>
-              </property>
-              <property name="text">
-               <string>show something</string>
-              </property>
-             </widget>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_show">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>640</width>
-               <height>480</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>640</width>
-               <height>480</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>TextLabel</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item>
-       <widget class="QWidget" name="widget_control" native="true">
-        <layout class="QGridLayout" name="gridLayout_3">
-         <item row="0" column="0">
-          <widget class="QWidget" name="widget" native="true">
-           <widget class="QPushButton" name="pushButton_enter">
-            <property name="geometry">
-             <rect>
-              <x>310</x>
-              <y>150</y>
-              <width>106</width>
-              <height>30</height>
-             </rect>
+    <item row="0" column="1">
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Image Show</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0">
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <widget class="QFrame" name="frame_crtl">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <property name="text">
-             <string>开始</string>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>300</height>
+             </size>
             </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <item>
+              <widget class="QGroupBox" name="groupBox_rgb">
+               <property name="title">
+                <string>RGB</string>
+               </property>
+               <widget class="QSlider" name="rgb_exposure_slider">
+                <property name="geometry">
+                 <rect>
+                  <x>90</x>
+                  <y>107</y>
+                  <width>160</width>
+                  <height>31</height>
+                 </rect>
+                </property>
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+               <widget class="QComboBox" name="comboBox">
+                <property name="geometry">
+                 <rect>
+                  <x>100</x>
+                  <y>50</y>
+                  <width>161</width>
+                  <height>29</height>
+                 </rect>
+                </property>
+               </widget>
+               <widget class="QSlider" name="horizontalSlider_2">
+                <property name="geometry">
+                 <rect>
+                  <x>90</x>
+                  <y>157</y>
+                  <width>160</width>
+                  <height>21</height>
+                 </rect>
+                </property>
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+               <widget class="QSlider" name="horizontalSlider_3">
+                <property name="geometry">
+                 <rect>
+                  <x>90</x>
+                  <y>207</y>
+                  <width>160</width>
+                  <height>21</height>
+                 </rect>
+                </property>
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+               <widget class="QRadioButton" name="radioButton_rgb">
+                <property name="geometry">
+                 <rect>
+                  <x>440</x>
+                  <y>30</y>
+                  <width>21</width>
+                  <height>27</height>
+                 </rect>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+               <widget class="QLabel" name="label">
+                <property name="geometry">
+                 <rect>
+                  <x>10</x>
+                  <y>50</y>
+                  <width>80</width>
+                  <height>21</height>
+                 </rect>
+                </property>
+                <property name="text">
+                 <string>Out Mode</string>
+                </property>
+               </widget>
+               <widget class="QLabel" name="label_2">
+                <property name="geometry">
+                 <rect>
+                  <x>10</x>
+                  <y>120</y>
+                  <width>80</width>
+                  <height>21</height>
+                 </rect>
+                </property>
+                <property name="text">
+                 <string>Exposure</string>
+                </property>
+               </widget>
+               <widget class="QLabel" name="label_3">
+                <property name="geometry">
+                 <rect>
+                  <x>10</x>
+                  <y>210</y>
+                  <width>80</width>
+                  <height>21</height>
+                 </rect>
+                </property>
+                <property name="text">
+                 <string>TextLabel</string>
+                </property>
+               </widget>
+               <widget class="QLabel" name="label_4">
+                <property name="geometry">
+                 <rect>
+                  <x>10</x>
+                  <y>160</y>
+                  <width>80</width>
+                  <height>21</height>
+                 </rect>
+                </property>
+                <property name="text">
+                 <string>TextLabel</string>
+                </property>
+               </widget>
+               <widget class="QDoubleSpinBox" name="rgb_exposure_input">
+                <property name="geometry">
+                 <rect>
+                  <x>270</x>
+                  <y>110</y>
+                  <width>74</width>
+                  <height>30</height>
+                 </rect>
+                </property>
+               </widget>
+               <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
+                <property name="geometry">
+                 <rect>
+                  <x>270</x>
+                  <y>150</y>
+                  <width>74</width>
+                  <height>30</height>
+                 </rect>
+                </property>
+               </widget>
+               <widget class="QDoubleSpinBox" name="doubleSpinBox_3">
+                <property name="geometry">
+                 <rect>
+                  <x>270</x>
+                  <y>200</y>
+                  <width>74</width>
+                  <height>30</height>
+                 </rect>
+                </property>
+               </widget>
+              </widget>
+             </item>
+             <item>
+              <widget class="QGroupBox" name="groupBox_ir">
+               <property name="title">
+                <string>IR</string>
+               </property>
+               <widget class="QRadioButton" name="radioButton_ir">
+                <property name="geometry">
+                 <rect>
+                  <x>450</x>
+                  <y>30</y>
+                  <width>21</width>
+                  <height>27</height>
+                 </rect>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </widget>
+             </item>
+             <item>
+              <widget class="QGroupBox" name="groupBox_depth">
+               <property name="title">
+                <string>Depth</string>
+               </property>
+               <widget class="QRadioButton" name="radioButton_depth">
+                <property name="geometry">
+                 <rect>
+                  <x>450</x>
+                  <y>30</y>
+                  <width>21</width>
+                  <height>27</height>
+                 </rect>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </widget>
+             </item>
+             <item>
+              <widget class="QGroupBox" name="groupBox_control">
+               <property name="title">
+                <string>Control</string>
+               </property>
+               <widget class="QPushButton" name="pushButton_enter">
+                <property name="geometry">
+                 <rect>
+                  <x>40</x>
+                  <y>60</y>
+                  <width>106</width>
+                  <height>30</height>
+                 </rect>
+                </property>
+                <property name="text">
+                 <string>开始</string>
+                </property>
+               </widget>
+               <widget class="QPushButton" name="pushButton_grabPic">
+                <property name="geometry">
+                 <rect>
+                  <x>40</x>
+                  <y>90</y>
+                  <width>106</width>
+                  <height>30</height>
+                 </rect>
+                </property>
+                <property name="text">
+                 <string>拍照</string>
+                </property>
+               </widget>
+              </widget>
+             </item>
+            </layout>
            </widget>
-           <widget class="QPushButton" name="pushButton_grabPic">
-            <property name="geometry">
-             <rect>
-              <x>480</x>
-              <y>150</y>
-              <width>106</width>
-              <height>30</height>
-             </rect>
+          </item>
+          <item>
+           <widget class="QFrame" name="frame_view">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
             </property>
-            <property name="text">
-             <string>拍照</string>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
             </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <item>
+              <widget class="QLabel" name="label_rgb_show">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>640</width>
+                 <height>480</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>RGB</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_ir_show">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>640</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>IR</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_depth_show">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>640</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Depth</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="label_showChanged">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>640</width>
-             <height>480</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>640</width>
-             <height>480</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>TextLabel</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-     </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>Other Function</string>
+       </attribute>
+      </widget>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -145,7 +362,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1344</width>
+     <width>1994</width>
      <height>32</height>
     </rect>
    </property>

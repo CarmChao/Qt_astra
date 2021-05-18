@@ -75,7 +75,8 @@ void CameraDriver::OpenCamera(CameraConfig &new_config)
     int vendor_id = std::stoi("0x2bc5", 0, 16);
     int product_id = std::stoi("0x0502", 0, 16);
 
-    uvc_error_t find_err = uvc_find_device(mpctx, &mpdev, vendor_id, product_id, NULL);
+//    uvc_error_t find_err = uvc_find_device(mpctx, &mpdev, -1, -1, NULL);
+    uvc_error_t find_err = uvc_find_device(mpctx, &mpdev, 0, 0, NULL);
     qDebug("after find");
     if(find_err != UVC_SUCCESS)
     {
@@ -117,7 +118,7 @@ void CameraDriver::OpenCamera(CameraConfig &new_config)
     uvc_error_t open_err = uvc_open(mpdev, &mpdevh);
     qDebug("after open");
     if (open_err != UVC_SUCCESS) {
-        std::cout<<"uvc open error!"<<std::endl;
+        qDebug("uvc open error!");
 
         uvc_unref_device(mpdev);
         return;
@@ -275,8 +276,8 @@ void CameraDriver::ImageCallback(uvc_frame_t *frame) {
   }
 
   qDebug("get img");
-  QImage imgSrc = QImage((const uchar*)(image.data), image.cols, image.rows, image.step, QImage::Format_RGB888);
-  emit sendFrames(imgSrc, 10);
+  rgb_img = QImage((const uchar*)(image.data), image.cols, image.rows, image.step, QImage::Format_RGB888);
+  emit sendFrames(10);
 }
 
 CameraDriver::~CameraDriver()
